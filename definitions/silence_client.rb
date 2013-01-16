@@ -11,7 +11,7 @@ define :sensu_silence_client, :action => :create, :payload => {} do
     end
   end
 
-  if params[:action] == delete or params[:action] == :unsilence
+  if params[:action] == :delete or params[:action] == :unsilence
     sensu_api_stash "silence/#{params[:name]}" do
       api_uri params[:api_uri]
       action :delete
