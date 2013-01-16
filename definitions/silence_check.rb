@@ -1,6 +1,6 @@
 define :sensu_silence_check, :action => :create, :payload => {} do
 
-  if params[:client].is_nil?
+  if params[:client].nil?
     params[:client] = node.name
   end
 
