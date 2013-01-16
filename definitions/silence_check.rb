@@ -1,4 +1,9 @@
-define :sensu_silence_check, :action => :create, :client => node['name'], :payload => {} do
+define :sensu_silence_check, :action => :create, :payload => {} do
+
+  if params[:client].is_nil?
+    params[:client] = node['name']
+  end
+
   if params[:action] == :create or params[:action] == :silence
     # add a timestamp and actor to the payload 
     # when we look at the stash later, these bits helps us know how old a stash is and how it got there
