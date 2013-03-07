@@ -5,6 +5,9 @@ default.sensu.directory = "/etc/sensu"
 default.sensu.log_directory = "/var/log/sensu"
 default.sensu.use_ssl = true
 default.sensu.use_embedded_ruby = false
+# options for init_scheme are: init, runit
+# TODO: upstart, systemd
+default.sensu.init_scheme = 'init'
 
 # rabbitmq
 default.sensu.rabbitmq.host = "localhost"
