@@ -17,9 +17,23 @@
 # limitations under the License.
 #
 
-service "sensu-api" do
-  provider node.platform_family =~ /debian/ ? Chef::Provider::Service::Init::Debian : Chef::Provider::Service::Init::Redhat
-  supports :status => true, :restart => true
-  action [:enable, :start]
-  subscribes :restart, resources("ruby_block[sensu_service_trigger]"), :delayed
+case node.sensu.init_scheme
+when 'init'
+  service "sensu-api" do
+    provider node.platform_family =~ /debian/ ? Chef::Provider::Service::Init::Debian : Chef::Provider::Service::Init::Redhat
+    supports :status => true, :restart => true
+    action [:enable, :start]
+    subscribes :restart, resources("ruby_block[sensu_service_trigger]"), :delayed
+  end
+when 'runit'
+  include_recipe 'sensu::runsvdir_enable'
+  runit_service 'sensu-api' do
+    sv_bin ::File.join(node.sensu.home,'embedded','bin','sv')
+    sv_dir ::File.join(node.sensu.home,'sv')
+    service_dir ::File.join(node.sensu.home,'service')
+    sv_templates false
+    subscribes :restart, resources('ruby_block[sensu_service_trigger]'), :delayed
+  end
+else
+  Chef::Log.fatal("Sorry, #{node.sensu.init_scheme} init scheme is not supported")
 end
