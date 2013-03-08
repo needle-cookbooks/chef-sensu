@@ -2,6 +2,7 @@
 default.sensu.version = "0.9.11-1"
 default.sensu.use_unstable_repo = false
 default.sensu.directory = "/etc/sensu"
+default.sensu.home = "/opt/sensu"
 default.sensu.log_directory = "/var/log/sensu"
 default.sensu.use_ssl = true
 default.sensu.use_embedded_ruby = false
