@@ -21,6 +21,9 @@ depends "rabbitmq"
 # available @ https://github.com/miah/chef-redis
 depends "redis"
 
+# available @ http://community.opscode.com/cookbooks/runit
+depends "runit", "~> 1.1.0"
+
 %w[
   ubuntu
   debian
